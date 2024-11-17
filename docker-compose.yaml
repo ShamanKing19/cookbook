@@ -1,0 +1,78 @@
+services:
+  nginx:
+    container_name: nginx-server
+    hostname: nginx
+    image: nginx:latest
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/logs:/var/log/nginx
+    networks:
+      - default
+  php:
+    container_name: php-fpm
+    hostname: php
+    build:
+      context: ./docker/php
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - default
+  db:
+    hostname: mariadb
+    image: mariadb:10.8
+    restart: always
+    volumes:
+      - ./docker/db:/var/lib/mysql
+    environment:
+      TZ: "Europe/Moscow"
+      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: cookbook
+      MARIADB_USER: cookbook
+      MARIADB_PASSWORD: 12345678
+      MARIADB_ROOT_PASSWORD: root
+    networks:
+      - default
+    ports:
+      - '3306:3306'
+#  elasticsearch:
+#    hostname: elasticsearch
+#    build:
+#      context: ./docker/elasticsearch
+#    volumes:
+#      - ./docker/elasticsearch/data:/usr/share/elasticsearch/data
+#    environment:
+#      discovery.type: single-node
+#      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+#      ELASTICSEARCH_USERNAME: kibana_system
+#      ELASTIC_PASSWORD: SimplePassw
+#      xpack.security.enabled: 'false'
+#      xpack.license.self_generated.type: basic
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    networks:
+#      - default
+#  kibana:
+#    hostname: "kibana"
+#    image: kibana:8.11.1
+#    volumes:
+#      - ./docker/kibana/data:/usr/share/kibana/data
+#    environment:
+#      SERVER_NAME: kibana.loc
+#      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+#      ELASTICSEARCH_USERNAME: kibana_system
+#      ELASTICSEARCH_PASSWORD: SimplePassw
+#    ports:
+#      - "5601:5601"
+#    networks:
+#      - default
+#    depends_on:
+#      - elasticsearch
+
+networks:
+  default:
+    driver: bridge
