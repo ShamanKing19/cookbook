@@ -1,5 +1,5 @@
 # docker
-/docker/db
+/docker/postgres_db
 /docker/nginx/logs
 
 /.phpunit.cache

@@ -2,7 +2,7 @@ services:
   nginx:
     container_name: nginx-server
     hostname: nginx
-    image: nginx:latest
+    image: nginx:1.27.2
     ports:
       - '80:80'
       - '443:443'
@@ -22,22 +22,19 @@ services:
     networks:
       - default
   db:
-    hostname: mariadb
-    image: mariadb:10.8
-    restart: always
-    volumes:
-      - ./docker/db:/var/lib/mysql
+    image: postgres:17.1
+    hostname: postgres_db
     environment:
-      TZ: "Europe/Moscow"
-      MYSQL_ROOT_PASSWORD: root
-      MARIADB_DATABASE: cookbook
-      MARIADB_USER: cookbook
-      MARIADB_PASSWORD: 12345678
-      MARIADB_ROOT_PASSWORD: root
-    networks:
-      - default
+      POSTGRES_DB: cookbook
+      POSTGRES_USER: cookbook
+      POSTGRES_PASSWORD: 12345678
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - '3306:3306'
+      - "5432:5432"
+    volumes:
+      - ./docker/postgres_db:/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+    tty: true
 #  elasticsearch:
 #    hostname: elasticsearch
 #    build:
