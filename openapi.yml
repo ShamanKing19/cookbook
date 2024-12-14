@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: Recipe book
+  version: 1.0.0
+
+servers:
+  - url: http://localhost/
+    description: Local server
+tags:
+  - name: Recipes
+    description: Рецепты
+
+paths:
+  /api/v1/meals/:
+    # Список блюд
+    get:
+      responses:
+        200:
+          description: Список блюд
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/meal"
+    # Создание или обновление блюда
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: id блюда, если оно существует (передаётся для обновления)
+                name:
+                  type: string
+                  description: Название блюда
+                  example: Французские булочки
+                slug:
+                  type: string
+                  description: Символьный код
+                  example: francuzskie-bulochki
+      responses:
+        200:
+          description: Успешное создание или обновление блюда
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    description: id созданного элемента
+
+  /api/v1/meals/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id блюда
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Детальная информация о блюде
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/meal"
+
+  /api/v1/meals/{slug}:
+    get:
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: slug блюда
+          schema:
+            type: string
+      responses:
+        200:
+          description: Детальная информация о блюде
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/meal"
+
+
+#  /api/v1/recipes/:
+
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    apiKey:
+      type: apiKey
+      description: API key to authorize requests.
+      name: X-Authorization
+      in: header
+  schemas:
+    # Блюдо
+    meal:
+      description: Блюдо
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id
+        name:
+          type: string
+          description: Название блюда
+        slug:
+          type: string
+          description: Символьный код блюда # TODO: Добавить поле в таблицу
+
+    # Рецепт для листинга
+    recipe:
+      description: Краткая информация о рецепте для листинга
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id
+        name:
+          type: string
+          description: Название рецепта
+        slug:
+          type: string
+          description: Символьный код блюда # TODO: Добавить поле в таблицу
+        cooking_time:
+          type: integer
+          description: Время приготовления в секундах
+        images:
+          items:
+            $ref: "#/components/schemas/image"
+
+    # Изображение каталога
+    image:
+      description: Изображение
+      type: object
+      properties:
+        url:
+          type: string
+          description: Ссылка на изображение
+        width:
+          type: integer
+          description: Ширина изображения
+        height:
+          type: integer
+          description: Высота изображения
+        alt:
+          type: string
+          description: Параметр alt

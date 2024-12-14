@@ -9,7 +9,15 @@ class Meal extends Model
 {
     protected $table = 'meals';
     public $timestamps = false;
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'id',
+        'name',
+        'slug'
+    ];
+
+    public int $id;
+    public string $name;
+    public string $slug;
 
     public function recipes(): HasMany
     {
