@@ -60,4 +60,27 @@ class MealsController extends Controller
 
         return $meal;
     }
+
+    public function recipesById(int $id)
+    {
+        $meal = $this->repository->getMealById($id);
+        if ($meal === null) {
+            // TODO Сделать middleware для проверки и отдачи такой ошибки
+            return response()->json(['message' => "Блюдо \"$id\" не найдено"]);
+        }
+
+        return $meal->recipes()->get();
+    }
+
+    public function recipesBySlug(string $slug)
+    {
+        $meal = $this->repository->getMealBySlug($slug);
+        if ($meal === null) {
+            // TODO Сделать middleware для проверки и отдачи такой ошибки
+            return response()->json(['message' => "Блюдо \"$slug\" не найдено"]);
+        }
+
+        return $meal->recipes()->get();
+    }
+
 }

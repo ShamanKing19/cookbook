@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost/
+  - url: http://localhost
     description: Local server
 tags:
   - name: Recipes
@@ -55,12 +55,7 @@ paths:
   /api/v1/meals/{id}:
     get:
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id блюда
-          schema:
-            type: integer
+        - $ref: "#/components/parameters/id"
       responses:
         200:
           description: Детальная информация о блюде
@@ -72,12 +67,7 @@ paths:
   /api/v1/meals/{slug}:
     get:
       parameters:
-        - name: slug
-          in: path
-          required: true
-          description: slug блюда
-          schema:
-            type: string
+        - $ref: "#/components/parameters/slug"
       responses:
         200:
           description: Детальная информация о блюде
@@ -86,9 +76,33 @@ paths:
               schema:
                 $ref: "#/components/schemas/meal"
 
+  /api/v1/meals/{id}/recipes:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        200:
+          description: Список рецептов блюда
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/recipe-item"
 
-#  /api/v1/recipes/:
-
+  /api/v1/meals/{slug}/recipes:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/slug"
+      responses:
+        200:
+          description: Список рецептов блюда
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/recipe-item"
 
 components:
   securitySchemes:
@@ -100,6 +114,24 @@ components:
       description: API key to authorize requests.
       name: X-Authorization
       in: header
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: ID записи в базе данных
+      schema:
+        type: integer
+    slug:
+      name: slug
+      in: path
+      required: true
+      description: Символьный код
+      schema:
+        type: string
+
+
   schemas:
     # Блюдо
     meal:
@@ -114,10 +146,10 @@ components:
           description: Название блюда
         slug:
           type: string
-          description: Символьный код блюда # TODO: Добавить поле в таблицу
+          description: Символьный код блюда
 
     # Рецепт для листинга
-    recipe:
+    recipe-item:
       description: Краткая информация о рецепте для листинга
       type: object
       properties:
@@ -129,7 +161,7 @@ components:
           description: Название рецепта
         slug:
           type: string
-          description: Символьный код блюда # TODO: Добавить поле в таблицу
+          description: Символьный код блюда
         cooking_time:
           type: integer
           description: Время приготовления в секундах
