@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Meal;
 
-use App\Domain\Meal\Meal;
 use App\Exceptions\ModelNotSavedException;
-use App\Exceptions\ModelNotUpdatedException;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Collection;
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Meal\Meal;
+use App\Domain\Meal\MealsRepository;
 use App\Exceptions\ModelNotSavedException;
 use App\Http\Requests\CreateOrUpdateMealRequest;
-use App\Repositories\MealsRepository;
 use App\Services\MealsService;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Collection;
@@ -53,9 +53,9 @@ class MealsController extends Controller
         try {
             $meal = $this->service->updateOrCreate($meal);
         } catch (UniqueConstraintViolationException $e) {
-            return response()->json(['message' => 'Блюдо "' . $meal->getAttribute('slug') . '" уже существует'],400);
+            return response()->json(['message' => 'Блюдо "' . $meal->getAttribute('slug') . '" уже существует'], 400);
         } catch (ModelNotSavedException $e) {
-            return response()->json(['message' => 'Не удалось создать блюдо'],400);
+            return response()->json(['message' => 'Не удалось создать блюдо'], 400);
         }
 
         return $meal;

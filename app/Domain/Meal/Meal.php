@@ -5,9 +5,12 @@ namespace App\Domain\Meal;
 use App\Domain\Recipe\Recipe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Orchid\Screen\AsSource;
 
 class Meal extends Model
 {
+    use AsSource;
+
     protected $table = 'meals';
     public $timestamps = false;
     protected $fillable = [
