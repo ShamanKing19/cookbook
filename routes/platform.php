@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\RecipesListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -12,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
 
-// Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+
+/**
+ * Рецепты
+ */
+//Route::screen('meals', RecipesListScreen::class)->name('meals.list');
+Route::screen('recipes', RecipesListScreen::class)->name('recipes.list');
 
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')

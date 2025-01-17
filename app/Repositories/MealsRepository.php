@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Domain\Meal\Meal;
 use App\Exceptions\ModelNotSavedException;
 use App\Exceptions\ModelNotUpdatedException;
-use App\Models\Meal;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Collection;
 

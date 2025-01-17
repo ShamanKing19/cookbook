@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Domain\Meal\Meal;
 use App\Exceptions\ModelNotSavedException;
-use App\Models\Meal;
 use App\Repositories\MealsRepository;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Str;

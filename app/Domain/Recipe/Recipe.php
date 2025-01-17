@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Recipe;
 
+use App\Domain\Meal\Meal;
+use App\Models\Ingredient;
+use App\Models\Instrument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Orchid\Screen\AsSource;
 
 class Recipe extends Model
 {
+    use AsSource;
+
     protected $table = 'recipes';
     protected $fillable = [
         'meal_id',

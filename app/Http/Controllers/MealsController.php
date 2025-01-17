@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Meal\Meal;
 use App\Exceptions\ModelNotSavedException;
 use App\Http\Requests\CreateOrUpdateMealRequest;
-use App\Models\Meal;
 use App\Repositories\MealsRepository;
 use App\Services\MealsService;
 use Illuminate\Database\UniqueConstraintViolationException;
