@@ -104,6 +104,40 @@ paths:
                 items:
                   $ref: "#/components/schemas/recipe-item"
 
+  # TODO: Сделать api
+  /api/v1/recipes:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID рецепта (для обновления записи)
+                meal_id:
+                  type: integer
+                  required: true
+                  description: ID блюда
+                slug:
+                  type: string
+                  description: Символьный код
+                description:
+                  type: string
+                  description: Описание рецепта
+                cooking_time:
+                  type: integer
+                  description: Время готовки (в секундах)
+                author_id:
+                  type: integer
+                  description: ID автора
+
+
+      responses:
+        200:
+          description: Блюдо успешно создалось
+
 components:
   securitySchemes:
     basicAuth:
