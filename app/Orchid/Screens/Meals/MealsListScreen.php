@@ -18,7 +18,7 @@ class MealsListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'meals' => $this->repository->getAll()
+            'meals' => $this->repository->getAllPaginated()
         ];
     }
 
