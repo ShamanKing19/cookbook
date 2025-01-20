@@ -4,18 +4,18 @@ namespace App\Domain\Meal;
 
 use App\Exceptions\ModelNotSavedException;
 use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MealsRepository
 {
     /**
      * Все блюда
      *
-     * @return Collection<Meal>
+     * @return LengthAwarePaginator<Meal>
      */
-    public function getAll(): Collection
+    public function getAllPaginated(): LengthAwarePaginator
     {
-        return Meal::all();
+        return Meal::paginate(30);
     }
 
     /**
@@ -25,7 +25,7 @@ class MealsRepository
      *
      * @return Meal|null
      */
-    public function getMealById(int $id): ?Meal
+    public function getById(int $id): ?Meal
     {
         return Meal::find($id);
     }
