@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Meals\MealDetailScreen;
 use App\Orchid\Screens\Meals\MealsListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Recipes\RecipesListScreen;
@@ -16,9 +17,17 @@ use Tabuna\Breadcrumbs\Trail;
 Route::screen('/main', PlatformScreen::class)->name('platform.main');
 
 /**
+ * Блюда
+ */
+Route::prefix('meals')->group(function () {
+    Route::screen('/', MealsListScreen::class)->name('meals.list');
+    Route::screen('/create', MealDetailScreen::class)->name('meals.create');
+    Route::screen('/{id}', MealDetailScreen::class)->whereNumber('id')->name('meals.detail');
+});
+
+/**
  * Рецепты
  */
-Route::screen('meals', MealsListScreen::class)->name('meals.list');
 Route::screen('recipes', RecipesListScreen::class)->name('recipes.list');
 
 Route::screen('profile', UserProfileScreen::class)

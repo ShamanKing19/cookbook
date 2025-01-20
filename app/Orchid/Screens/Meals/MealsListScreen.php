@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Meals;
 
 use App\Domain\Meal\MealsRepository;
 use App\Orchid\Layouts\Meals\MealsListLayout;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class MealsListScreen extends Screen
@@ -34,7 +35,11 @@ class MealsListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Создать')
+                ->route('meals.create')
+                ->icon(config('admin_ui.create_icon'))
+        ];
     }
 
     /**
