@@ -3,7 +3,7 @@
 namespace App\Orchid\Screens\Recipes;
 
 use App\Domain\Recipe\RecipesRepository;
-use App\Orchid\Layouts\RecipesListLayout;
+use App\Orchid\Layouts\Recipes\RecipesListLayout;
 use Orchid\Screen\Screen;
 
 class RecipesListScreen extends Screen

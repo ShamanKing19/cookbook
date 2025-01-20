@@ -3,7 +3,7 @@
 namespace App\Orchid\Screens\Meals;
 
 use App\Domain\Meal\MealsRepository;
-use App\Orchid\Layouts\MealsListLayout;
+use App\Orchid\Layouts\Meals\MealsListLayout;
 use Orchid\Screen\Screen;
 
 class MealsListScreen extends Screen
