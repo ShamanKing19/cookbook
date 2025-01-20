@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Orchid\Screens;
+namespace App\Orchid\Screens\Recipes;
 
-use App\Domain\Meal\MealsRepository;
-use App\Orchid\Layouts\MealsListLayout;
+use App\Domain\Recipe\RecipesRepository;
+use App\Orchid\Layouts\RecipesListLayout;
 use Orchid\Screen\Screen;
 
-class MealsListScreen extends Screen
+class RecipesListScreen extends Screen
 {
-    private MealsRepository $repository;
+    private RecipesRepository $repository;
 
-    public function __construct(MealsRepository $repository)
+    public function __construct(RecipesRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -18,13 +18,18 @@ class MealsListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'meals' => $this->repository->getAll()
+            'recipes' => $this->repository->getAll()
         ];
     }
 
+    /**
+     * The name of the screen displayed in the header.
+     *
+     * @return string|null
+     */
     public function name(): ?string
     {
-        return 'Блюда';
+        return 'Рецепты блюд';
     }
 
     /**
@@ -45,7 +50,7 @@ class MealsListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            MealsListLayout::class
+            RecipesListLayout::class
         ];
     }
 }

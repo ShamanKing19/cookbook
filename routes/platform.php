@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\MealsListScreen;
+use App\Orchid\Screens\Meals\MealsListScreen;
 use App\Orchid\Screens\PlatformScreen;
-use App\Orchid\Screens\RecipesListScreen;
+use App\Orchid\Screens\Recipes\RecipesListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -12,7 +12,6 @@ use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
-
 
 Route::screen('/main', PlatformScreen::class)->name('platform.main');
 
