@@ -8,24 +8,19 @@ use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
 use App\Http\Controllers\MealsController;
 use App\Orchid\Layouts\Meals\MealDetailLayout;
-use App\Services\MealsService;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 
 class MealDetailScreen extends Screen
 {
-    private MealsService $service;
-    private MealsRepository $repository;
-    private MealsController $controller;
     private ?Meal $meal = null;
     private bool $exists = false;
 
-    public function __construct(MealsService $service, MealsRepository $repository, MealsController $controller)
-    {
-        $this->service = $service;
-        $this->repository = $repository;
-        $this->controller = $controller;
+    public function __construct(
+        public MealsRepository $repository,
+        public MealsController $apiController
+    ) {
     }
 
     public function query(?int $id = null): iterable
@@ -74,10 +69,9 @@ class MealDetailScreen extends Screen
 
     public function create(CreateMealRequest $request)
     {
-        $response = $this->controller->create($request);
-        if ($response->status() === 201) {
+        $response = $this->apiController->create($request);
+        if ($response->isSuccessful()) {
             Toast::success('Блюдо создано!');
-
 
             return redirect(route('meals.detail', ['id' => $response->getOriginalContent()['id']]));
         }
@@ -87,10 +81,13 @@ class MealDetailScreen extends Screen
 
     public function update(UpdateMealRequest $request)
     {
-        $fields = $request->validated();
-        $meal = Meal::find($fields['id']);
-        $meal = $this->service->updateOrCreate($meal);
+        $response = $this->apiController->update($request);
+        if ($response->isSuccessful()) {
+            Toast::success('Блюдо обновлено!');
 
-        Toast::success('Блюдо обновлено!');
+            return redirect(route('meals.detail', ['id' => $request->get('id')]));
+        }
+
+        Toast::error('Не удалось обновить блюдо');
     }
 }

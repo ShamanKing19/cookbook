@@ -18,6 +18,7 @@ class MealsController
         $this->service = $service;
     }
 
+    // TODO: обрабатывать ошибки и отправлять ответ
     public function create(CreateMealRequest $request): Response
     {
         $meal = new Meal();
@@ -30,12 +31,16 @@ class MealsController
         ], 201);
     }
 
+    // TODO: обрабатывать ошибки и отправлять ответ
     public function update(UpdateMealRequest $request)
     {
-        $fields = $request->validated();
-        $meal = Meal::find($fields['id']);
+        $meal = Meal::find($request->post('id'));
+        $meal->fill($request->validated());
+        $meal = $this->service->updateOrCreate($meal);
 
-        return $this->service->updateOrCreate($meal);
+        return new Response([
+            'updated' => $meal->getDirty()
+        ], 200);
     }
 
     public function delete(Request $request)

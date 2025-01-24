@@ -10,11 +10,10 @@ use Illuminate\Support\Str;
 
 class MealsService
 {
-    private MealsRepository $repository;
 
-    public function __construct(MealsRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        public MealsRepository $repository
+    ) {
     }
 
     /**
