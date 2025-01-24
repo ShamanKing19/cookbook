@@ -19,7 +19,8 @@ class MealDetailLayout extends Rows
         $meal = $this->query['meal'];
 
         return [
-            Label::make('id')
+            Input::make('id')
+                ->readonly()
                 ->title('id')
                 ->horizontal()
                 ->value($meal?->getAttribute('id')),
