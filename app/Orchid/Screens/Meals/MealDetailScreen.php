@@ -8,6 +8,8 @@ use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
 use App\Http\Controllers\MealsController;
 use App\Orchid\Layouts\Meals\MealDetailLayout;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
@@ -46,11 +48,10 @@ class MealDetailScreen extends Screen
         $buttons = [];
         if ($this->exists) {
             $buttons[] = Button::make('Удалить')
-                ->route('api.meals.delete', ['id' => $this->meal->getAttribute('id')])
+                ->method('delete')
                 ->icon(config('admin_ui.delete_icon'));
         }
         $buttons[] = Button::make('Сохранить')
-//            ->route($this->exists ? 'api.meals.update' : 'api.meals.create')
             ->method($this->exists ? 'update' : 'create')
             ->icon($this->exists ? config('admin_ui.save_icon') : config('admin_ui.create_icon'));
 
@@ -67,7 +68,7 @@ class MealDetailScreen extends Screen
         ];
     }
 
-    public function create(CreateMealRequest $request)
+    public function create(CreateMealRequest $request): ?RedirectResponse
     {
         $response = $this->apiController->create($request);
         if ($response->isSuccessful()) {
@@ -77,17 +78,37 @@ class MealDetailScreen extends Screen
         }
 
         Toast::error('Не удалось создать блюдо');
+
+        return null;
     }
 
     public function update(UpdateMealRequest $request)
     {
         $response = $this->apiController->update($request);
+        $id = (int)$request->get('id');
         if ($response->isSuccessful()) {
-            Toast::success('Блюдо обновлено!');
+            Toast::success("Блюдо с id=\"$id\" обновлено!");
 
-            return redirect(route('meals.detail', ['id' => $request->get('id')]));
+            return redirect(route('meals.detail', ['id' => $id]));
         }
 
-        Toast::error('Не удалось обновить блюдо');
+        Toast::error("Не удалось обновить блюдо \"$id\"");
+
+        return null;
+    }
+
+    public function delete(Request $request)
+    {
+        $id = (int)$request->get('id');
+        $response = $this->apiController->delete($id);
+        if ($response->isSuccessful()) {
+            Toast::success("Блюдо с id=\"$id\" удалено");
+
+            return redirect(route('meals.list'));
+        }
+
+        Toast::error("Не удалось удалить блюдо с id=\"$id\"");
+
+        return null;
     }
 }

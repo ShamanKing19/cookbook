@@ -6,7 +6,6 @@ use App\Domain\Meal\Meal;
 use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
 use App\Services\MealsService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class MealsController
@@ -32,7 +31,7 @@ class MealsController
     }
 
     // TODO: обрабатывать ошибки и отправлять ответ
-    public function update(UpdateMealRequest $request)
+    public function update(UpdateMealRequest $request): Response
     {
         $meal = Meal::find($request->post('id'));
         $meal->fill($request->validated());
@@ -43,8 +42,17 @@ class MealsController
         ], 200);
     }
 
-    public function delete(Request $request)
+    public function delete(int $id): Response
     {
+        $meal = Meal::find($id);
+        if ($meal === null) {
+            return new Response(['message' => 'Блюдо не найдено'], 404);
+        }
 
+        if ($meal->delete()) {
+            return new Response(['message' => "Блюдо $id удалено"], 200);
+        }
+
+        return new Response(['message' => "Не удалось удалить блюдо $id"], 500);
     }
 }
