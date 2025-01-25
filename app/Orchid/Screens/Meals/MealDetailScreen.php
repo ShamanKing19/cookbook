@@ -8,6 +8,7 @@ use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
 use App\Http\Controllers\MealsController;
 use App\Orchid\Layouts\Meals\MealDetailLayout;
+use App\Orchid\Layouts\Recipes\RecipesListLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
@@ -31,7 +32,8 @@ class MealDetailScreen extends Screen
         $this->exists = isset($this->meal);
 
         return [
-            'meal' => $this->meal ?? null
+            'meal' => $this->meal ?? null,
+            'recipes' => $this->meal->recipes()->get()
         ];
     }
 
@@ -64,7 +66,8 @@ class MealDetailScreen extends Screen
     public function layout(): iterable
     {
         return [
-            MealDetailLayout::class
+            MealDetailLayout::class,
+            RecipesListLayout::class
         ];
     }
 
