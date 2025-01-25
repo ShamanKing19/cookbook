@@ -17,7 +17,12 @@ class RecipesListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', 'id'),
+            TD::make('id', 'id')
+                ->render(function (Recipe $recipe) {
+                    $id = $recipe->getAttribute('id');
+
+                    return Link::make($id)->route('recipes.detail', ['id' => $id]);
+                }),
             TD::make('meal_id', 'Блюдо')
                 ->render(function (Recipe $recipe) {
                     return Link::make($recipe->meal->getAttribute('name'))

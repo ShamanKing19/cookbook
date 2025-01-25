@@ -10,4 +10,14 @@ class RecipesRepository
     {
         return Recipe::paginate();
     }
+
+    public function getById(int $id): ?Recipe
+    {
+        return Recipe::find($id);
+    }
+
+    public function save(Recipe $recipe): bool
+    {
+        return $recipe->save();
+    }
 }

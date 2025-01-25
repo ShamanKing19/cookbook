@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Orchid\Screens\Meals\MealDetailScreen;
 use App\Orchid\Screens\Meals\MealsListScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Recipes\RecipeDetailScreen;
 use App\Orchid\Screens\Recipes\RecipesListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -28,7 +29,11 @@ Route::prefix('meals')->group(function () {
 /**
  * Рецепты
  */
-Route::screen('recipes', RecipesListScreen::class)->name('recipes.list');
+Route::prefix('recipes')->group(function () {
+    Route::screen('/', RecipesListScreen::class)->name('recipes.list');
+    Route::screen('/create', RecipeDetailScreen::class)->name('recipes.create');
+    Route::screen('/{id}', RecipeDetailScreen::class)->whereNumber('id')->name('recipes.detail');
+});
 
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')

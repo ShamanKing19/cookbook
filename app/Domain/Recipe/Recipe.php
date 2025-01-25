@@ -19,7 +19,8 @@ class Recipe extends Model
         'meal_id',
         'description',
         'cooking_time',
-        'author_id'
+        'author_id',
+        'slug'
     ];
 
     public function meal(): BelongsTo

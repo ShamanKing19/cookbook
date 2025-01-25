@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Domain\Meal;
 
-use App\Domain\Meal\Meal;
 use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
-use App\Services\MealsService;
 use Illuminate\Http\Response;
 
 class MealsController

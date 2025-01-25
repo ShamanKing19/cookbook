@@ -3,10 +3,10 @@
 namespace App\Orchid\Screens\Meals;
 
 use App\Domain\Meal\Meal;
+use App\Domain\Meal\MealsController;
 use App\Domain\Meal\MealsRepository;
 use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
-use App\Http\Controllers\MealsController;
 use App\Orchid\Layouts\Meals\MealDetailLayout;
 use App\Orchid\Layouts\Recipes\RecipesListLayout;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +37,7 @@ class MealDetailScreen extends Screen
         ];
     }
 
-    public function name(): ?string
+    public function name(): string
     {
         return $this->exists ? 'Изменение блюда "' . $this->meal->getAttribute('name') . '"' : 'Создание блюда';
     }

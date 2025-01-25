@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Recipes;
 
 use App\Domain\Recipe\RecipesRepository;
 use App\Orchid\Layouts\Recipes\RecipesListLayout;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
 class RecipesListScreen extends Screen
@@ -22,29 +23,24 @@ class RecipesListScreen extends Screen
         ];
     }
 
-    /**
-     * The name of the screen displayed in the header.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
         return 'Рецепты блюд';
     }
 
     /**
-     * The screen's action buttons.
-     *
      * @return \Orchid\Screen\Action[]
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Добавить рецепт')
+                ->icon(config('admin_ui.create_icon'))
+                ->route('recipes.create')
+        ];
     }
 
     /**
-     * The screen's layout elements.
-     *
      * @return \Orchid\Screen\Layout[]|string[]
      */
     public function layout(): iterable

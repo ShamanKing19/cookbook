@@ -5,7 +5,6 @@ namespace App\Orchid\Layouts\Meals;
 use App\Domain\Meal\Meal;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Label;
 use Orchid\Screen\Layouts\Rows;
 
 class MealDetailLayout extends Rows

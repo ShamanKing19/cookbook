@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MealsController;
+use App\Domain\Meal\MealsController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
