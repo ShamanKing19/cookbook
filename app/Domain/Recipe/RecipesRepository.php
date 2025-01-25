@@ -2,10 +2,12 @@
 
 namespace App\Domain\Recipe;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class RecipesRepository
 {
-    public function getAll()
+    public function getAll(): LengthAwarePaginator
     {
-        return Recipe::all();
+        return Recipe::paginate();
     }
 }
