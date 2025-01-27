@@ -2,6 +2,8 @@
 
 namespace App\Domain\Recipe;
 
+use App\Exceptions\ModelNotSavedException;
+
 class RecipesService
 {
     public function __construct(
@@ -9,7 +11,15 @@ class RecipesService
     ) {
     }
 
-    public function updateOrCreate(Recipe $recipe)
+    /**
+     * Создание или обновление рецепта
+     *
+     * @param Recipe $recipe
+     *
+     * @return Recipe
+     * @throws ModelNotSavedException
+     */
+    public function updateOrCreate(Recipe $recipe): Recipe
     {
         $result = $this->repository->save($recipe);
         if ($result) {
@@ -18,7 +28,7 @@ class RecipesService
 
         $slug = $recipe->getAttribute('slug');
 
-        throw new \RuntimeException($recipe, "Не удалось создать рецепт \"$slug\"");
+        throw new ModelNotSavedException($recipe, "Не удалось создать рецепт \"$slug\"");
     }
 
 }

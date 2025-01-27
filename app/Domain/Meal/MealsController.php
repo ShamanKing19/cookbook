@@ -32,7 +32,6 @@ class MealsController
         ], 201);
     }
 
-    // TODO: обрабатывать ошибки и отправлять ответ
     public function update(UpdateMealRequest $request): Response
     {
         $meal = Meal::find($request->post('id'));
