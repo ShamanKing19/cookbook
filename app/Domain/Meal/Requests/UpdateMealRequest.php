@@ -17,7 +17,7 @@ class UpdateMealRequest extends FormRequest
         return [
             'id' => ['required', 'exists:' . Meal::class],
             'name' => ['string', "max:$maxLength"],
-            'slug' => ['string', "max:$maxLength", 'unique:' . Meal::class . ',slug']
+            'slug' => ['string', "max:$maxLength"]
         ];
     }
 }
