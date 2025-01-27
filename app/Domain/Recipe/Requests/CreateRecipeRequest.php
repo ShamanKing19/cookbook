@@ -3,6 +3,7 @@
 namespace App\Domain\Recipe\Requests;
 
 use App\Domain\Meal\Meal;
+use App\Domain\Recipe\Recipe;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,7 +19,7 @@ class CreateRecipeRequest extends FormRequest
             'description' => ['string', 'max:65535'],
             'cooking_time' => ['numeric', 'min:0'],
             'author_id' => ['numeric', 'exists:' . User::class . ',id'],
-            'slug' => ['string', 'max:' . config('constants.max_slug_length')]
+            'slug' => ['string', 'max:' . config('constants.max_slug_length'), 'unique:' . Recipe::class . ',slug']
         ];
     }
 }

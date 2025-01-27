@@ -20,7 +20,7 @@ class UpdateRecipeRequest extends FormRequest
             'description' => ['string', 'max:65535'],
             'cooking_time' => ['numeric', 'min:0'],
             'author_id' => ['numeric', 'exists:' . User::class . ',id'],
-            'slug' => ['string', 'max:' . config('constants.max_slug_length')]
+            'slug' => ['string', 'max:' . config('constants.max_slug_length'), 'unique:' . Recipe::class . ',slug']
         ];
     }
 }

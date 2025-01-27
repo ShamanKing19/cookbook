@@ -4,6 +4,7 @@ namespace App\Domain\Meal;
 
 use App\Domain\Meal\Requests\CreateMealRequest;
 use App\Domain\Meal\Requests\UpdateMealRequest;
+use App\Exceptions\ModelNotSavedException;
 use Illuminate\Http\Response;
 
 class MealsController
@@ -15,13 +16,16 @@ class MealsController
         $this->service = $service;
     }
 
-    // TODO: обрабатывать ошибки и отправлять ответ
     public function create(CreateMealRequest $request): Response
     {
         $meal = new Meal();
         $meal->fill($request->validated());
 
-        $meal = $this->service->updateOrCreate($meal);
+        try {
+            $meal = $this->service->updateOrCreate($meal);
+        } catch (ModelNotSavedException $e) {
+            return new Response(['message' => $e->getMessage()], 500);
+        }
 
         return new Response([
             'id' => $meal->getAttribute('id'),
@@ -33,11 +37,13 @@ class MealsController
     {
         $meal = Meal::find($request->post('id'));
         $meal->fill($request->validated());
-        $meal = $this->service->updateOrCreate($meal);
+        try {
+            $meal = $this->service->updateOrCreate($meal);
+        } catch (ModelNotSavedException $e) {
+            return new Response(['message' => $e->getMessage()], 500);
+        }
 
-        return new Response([
-            'updated' => $meal->getDirty()
-        ], 200);
+        return new Response(['updated' => $meal->getDirty()], 200);
     }
 
     public function delete(int $id): Response
