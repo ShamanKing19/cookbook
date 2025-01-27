@@ -33,7 +33,7 @@ class MealDetailScreen extends Screen
 
         return [
             'meal' => $this->meal ?? null,
-            'recipes' => $this->meal->recipes()->get()
+            'recipes' => $this->meal?->recipes()->get()
         ];
     }
 
