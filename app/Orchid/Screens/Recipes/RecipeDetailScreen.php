@@ -7,6 +7,7 @@ use App\Domain\Recipe\RecipesController;
 use App\Domain\Recipe\RecipesRepository;
 use App\Domain\Recipe\Requests\CreateRecipeRequest;
 use App\Domain\Recipe\Requests\UpdateRecipeRequest;
+use App\Orchid\Layouts\CookingSteps\CookingStepsLayout;
 use App\Orchid\Layouts\Recipes\RecipeDetailLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
@@ -30,7 +31,8 @@ class RecipeDetailScreen extends Screen
         $this->exists = isset($this->recipe);
 
         return [
-            'recipe' => $this->recipe
+            'recipe' => $this->recipe,
+            'cooking_steps' => $this->recipe->cookingSteps()->get()
         ];
     }
 
@@ -66,7 +68,8 @@ class RecipeDetailScreen extends Screen
     public function layout(): iterable
     {
         return [
-            RecipeDetailLayout::class
+            RecipeDetailLayout::class,
+            CookingStepsLayout::class
         ];
     }
 

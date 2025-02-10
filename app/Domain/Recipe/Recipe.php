@@ -2,12 +2,14 @@
 
 namespace App\Domain\Recipe;
 
+use App\Domain\CookingStep\CookingStep;
 use App\Domain\Meal\Meal;
 use App\Models\Ingredient;
 use App\Models\Instrument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Screen\AsSource;
 
 class Recipe extends Model
@@ -26,6 +28,11 @@ class Recipe extends Model
     public function meal(): BelongsTo
     {
         return $this->belongsTo(Meal::class, 'meal_id', 'id');
+    }
+
+    public function cookingSteps(): HasMany
+    {
+        return $this->hasMany(CookingStep::class, 'recipe_id', 'id');
     }
 
     public function instruments(): BelongsToMany
