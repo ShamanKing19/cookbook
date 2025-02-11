@@ -22,7 +22,7 @@ class MealsController
         $meal->fill($request->validated());
 
         try {
-            $meal = $this->service->updateOrCreate($meal);
+            $meal = $this->service->save($meal);
         } catch (ModelNotSavedException $e) {
             return new Response(['message' => $e->getMessage()], 500);
         }
@@ -37,7 +37,7 @@ class MealsController
         $meal = Meal::find($request->post('id'));
         $meal->fill($request->validated());
         try {
-            $meal = $this->service->updateOrCreate($meal);
+            $meal = $this->service->save($meal);
         } catch (ModelNotSavedException $e) {
             return new Response(['message' => $e->getMessage()], 500);
         }

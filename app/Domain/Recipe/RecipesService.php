@@ -19,7 +19,7 @@ class RecipesService
      * @return Recipe
      * @throws ModelNotSavedException
      */
-    public function updateOrCreate(Recipe $recipe): Recipe
+    public function save(Recipe $recipe): Recipe
     {
         $result = $this->repository->save($recipe);
         if ($result) {

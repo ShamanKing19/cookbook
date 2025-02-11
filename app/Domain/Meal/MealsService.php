@@ -24,7 +24,7 @@ class MealsService
      * @throws UniqueConstraintViolationException
      * @throws ModelNotSavedException
      */
-    public function updateOrCreate(Meal $meal): Meal
+    public function save(Meal $meal): Meal
     {
         if (empty($meal->getAttribute('slug'))) {
             $meal->setAttribute('slug', Str::slug($meal->getAttribute('name')));

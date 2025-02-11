@@ -18,7 +18,7 @@ class RecipesController
     {
         $recipe = new Recipe($request->validated());
         try {
-            if ($recipe = $this->service->updateOrCreate($recipe)) {
+            if ($recipe = $this->service->save($recipe)) {
                 return new Response([
                     'id' => $recipe
                 ]);
@@ -35,7 +35,7 @@ class RecipesController
         $recipe = Recipe::find($request->post('id'));
         $recipe->fill($request->validated());
         try {
-            $recipe = $this->service->updateOrCreate($recipe);
+            $recipe = $this->service->save($recipe);
         } catch (ModelNotSavedException $e) {
             return new Response(['message' => $e->getMessage()], 500);
         }
